@@ -4,6 +4,8 @@ import { SearchBar } from './SearchBar/SearchBar';
 import { Gallery } from './Gallery/Gallery';
 import { Button } from './Button/Button';
 
+import { Loader } from './Loader/Loader';
+
 export class App extends Component {
   state = {
     query: '',
@@ -31,13 +33,18 @@ export class App extends Component {
 
   async componentDidUpdate(prevProps, prevState) {
     try {
-      if (prevState.query !== this.state.query) {
+      if (
+        prevState.query !== this.state.query ||
+        this.state.page !== prevState.page
+      ) {
+        this.setState({ loading: true });
         const search = await fetchPhoto(this.state.query, this.state.page);
         this.setState({
           images:
             this.state.page === 1
               ? search.hits
               : [...prevState.images, ...search.hits],
+          loading: false,
           // loadMore: this.state.page < Math.ceil(search.totalHits / 12)
         });
       }
@@ -54,13 +61,12 @@ export class App extends Component {
         <SearchBar onSubmit={this.handleSubmit} />
 
         {this.state.images.length > 0 && <Gallery items={this.state.images} />}
-
+        {this.state.loading && <Loader></Loader>}
         {/* {this.state.images.length > 0 && <div>GALLERY</div>}
         {this.state.loading && <div>Loader...</div>} */}
         {this.state.images.length > 0 && (
           <Button onClick={this.handleLoadMore}></Button>
         )}
-        {console.log(this.state.images.length)}
       </div>
     );
   }
