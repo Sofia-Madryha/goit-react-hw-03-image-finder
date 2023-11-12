@@ -1,6 +1,7 @@
 import { Component } from 'react';
 
 import { Modal } from 'components/Modal/Modal';
+import "../ImageGalleryItem/ImageGalleryItem.css"
 
 const customStyles = {
   content: {
@@ -10,7 +11,19 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
-  },
+    padding:'0'  },
+  overlay: {
+    position: "fixed",
+    top: "0",
+    left: "0",
+    width: "100vw",
+    height: "100vh",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.8)",
+    zIndex: "1200",
+  }
 };
 
 export class ImageGalleryItem extends Component {
@@ -30,16 +43,15 @@ export class ImageGalleryItem extends Component {
   render() {
     const { id, webformatURL, largeImageURL } = this.props.image;
     return (
-      <ul>
-        <li className="ImageGalleryItem" key={id}>
-          <img
-            className="ImageGalleryItem-image"
-            src={webformatURL}
-            alt={id}
-            loading="lazy"
-            onClick={this.openModal}
-          />
-        </li>
+      <li className="image-gallery-item">
+        <img
+          className="image-gallery-item-image"
+          src={webformatURL}
+          alt={id}
+          loading="lazy"
+          onClick={this.openModal}
+        />
+
         <Modal
           isOpen={this.state.isModalOpen}
           onRequestClose={this.closeModal}
@@ -47,7 +59,7 @@ export class ImageGalleryItem extends Component {
           contentLabel="Image Modal"
           largeImageURL={largeImageURL}
         />
-      </ul>
+      </li>
     );
   }
 }

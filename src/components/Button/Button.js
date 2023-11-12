@@ -1,3 +1,5 @@
+import "../Button/Button.css"
+
 export const Button = ({onClick})=>{
-    return <button className="Button" onClick={onClick}>LoadMore</button>
+    return <button className="button" onClick={onClick}>LoadMore</button>
 }

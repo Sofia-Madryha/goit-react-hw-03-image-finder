@@ -28,7 +28,7 @@ export class App extends Component {
   };
 
   handleLoadMore = () => {
-    this.setState(prevState => prevState.page + 1);
+    this.setState(prevState => ({ page: prevState.page + 1 }));
   };
 
   async componentDidUpdate(prevProps, prevState) {

@@ -1,15 +1,16 @@
-export const SearchBar = ({ onSubmit}) => {
+import '../SearchBar/SearchBar.css';
+
+export const SearchBar = ({ onSubmit }) => {
   return (
-    <div className="Searchbar">
-        
-      <form className="SearchForm" onSubmit = {onSubmit}>
-        
-        <button className="SearchForm-button"></button>
-          <input className="SearchForm-input"
-            type="text"
-            name="query"
-            placeholder="Search"
-          />
+    <div className="searchbar">
+      <form className="search-form" onSubmit={onSubmit}>
+        <button className="search-form-button"></button>
+        <input
+          className="search-form-input"
+          type="text"
+          name="query"
+          placeholder="Search"
+        />
       </form>
     </div>
   );
