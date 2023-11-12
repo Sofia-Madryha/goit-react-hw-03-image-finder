@@ -2,6 +2,7 @@ import { Component } from 'react';
 import { fetchPhoto } from './api';
 import { SearchBar } from './SearchBar/SearchBar';
 import { Gallery } from './Gallery/Gallery';
+import { Button } from './Button/Button';
 
 export class App extends Component {
   state = {
@@ -10,6 +11,7 @@ export class App extends Component {
     images: [],
     loading: false,
     error: false,
+    loadMore: false,
   };
 
   handleSubmit = evt => {
@@ -18,11 +20,9 @@ export class App extends Component {
     const searchValue = form.elements.query.value;
     this.setState({
       query: searchValue,
+      images: [],
+      page: 1,
     });
-    // Сохраняем термин поиска (query)
-
-    // Сбрасываем page в 1
-    // Очистить массив картинок
   };
 
   handleLoadMore = () => {
@@ -33,12 +33,13 @@ export class App extends Component {
     try {
       if (prevState.query !== this.state.query) {
         const search = await fetchPhoto(this.state.query, this.state.page);
-        console.log(search);
-        this.setState(
-          (prevState = {
-            images: [...prevState.images, search],
-          })
-        );
+        this.setState({
+          images:
+            this.state.page === 1
+              ? search.hits
+              : [...prevState.images, ...search.hits],
+          // loadMore: this.state.page < Math.ceil(search.totalHits / 12)
+        });
       }
     } catch (error) {
       // this.setState({ error: true });
@@ -52,10 +53,14 @@ export class App extends Component {
       <div>
         <SearchBar onSubmit={this.handleSubmit} />
 
-        {this.state.images.length > 0 && <Gallery items = {this.state.images}/>} 
+        {this.state.images.length > 0 && <Gallery items={this.state.images} />}
+
         {/* {this.state.images.length > 0 && <div>GALLERY</div>}
-        {this.state.loading && <div>Loader...</div>}
-        <button onClick={this.handleLoadMore}>Load more</button> */}
+        {this.state.loading && <div>Loader...</div>} */}
+        {this.state.images.length > 0 && (
+          <Button onClick={this.handleLoadMore}></Button>
+        )}
+        {console.log(this.state.images.length)}
       </div>
     );
   }

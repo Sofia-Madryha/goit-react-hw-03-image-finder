@@ -9,7 +9,6 @@ export const SearchBar = ({ onSubmit}) => {
             type="text"
             name="query"
             placeholder="Search"
-            
           />
       </form>
     </div>

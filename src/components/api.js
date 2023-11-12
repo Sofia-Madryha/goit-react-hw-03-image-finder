@@ -12,5 +12,5 @@ export const fetchPhoto = async (searchValue, currentPage) => {
     page: currentPage,
   });
   const response = await axios.get(`${BASE_URL}?${params}`);
-return response.data.hits;
+return response.data;
 };
