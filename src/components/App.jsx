@@ -45,7 +45,7 @@ export class App extends Component {
               ? search.hits
               : [...prevState.images, ...search.hits],
           loading: false,
-          // loadMore: this.state.page < Math.ceil(search.totalHits / 12)
+          loadMore: this.state.page < Math.ceil(search.totalHits / 12)
         });
       }
     } catch (error) {
@@ -64,9 +64,9 @@ export class App extends Component {
         {this.state.loading && <Loader></Loader>}
         {/* {this.state.images.length > 0 && <div>GALLERY</div>}
         {this.state.loading && <div>Loader...</div>} */}
-        {this.state.images.length > 0 && (
-          <Button onClick={this.handleLoadMore}></Button>
-        )}
+        {this.state.loadMore> 0 && (
+          <Button onClick={this.handleLoadMore}></Button>)
+        }
       </div>
     );
   }
